@@ -153,6 +153,11 @@ void ProcessDialog::init()
 
     if (dir.exists())
         m_process->setWorkingDirectory(dir.absolutePath());
+
+    appendConsoleText(tr("Starting conversion with the following arguments:\n"));
+    appendConsoleText(args.join(" "));
+    appendConsoleText(tr("Processing..."));
+
     m_process->start(m_settings->waifu2xConverterCppCommand(), args);
 
     ui->iconLabel->setPixmap(style()->standardPixmap(QStyle::SP_FileIcon));

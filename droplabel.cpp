@@ -8,6 +8,7 @@ DropLabel::DropLabel(QWidget *parent)
 {
     setAcceptDrops(true);
     setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    setAlignment(Qt::AlignCenter);
 }
 
 void DropLabel::dragEnterEvent(QDragEnterEvent *e)
@@ -21,3 +22,5 @@ void DropLabel::dropEvent(QDropEvent *e)
 {
     emit fileDropped(e->mimeData()->urls().first().toLocalFile());
 }
+
+
