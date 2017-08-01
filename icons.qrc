@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/procdialog">
+        <file>icons/resize.svg</file>
+        <file>icons/cogs_2.svg</file>
+        <file>icons/sharp.svg</file>
+    </qresource>
+</RCC>

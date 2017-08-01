@@ -20,6 +20,7 @@ public:
 private slots:
     void browseImage();
     void processImage(const QString& imageFileName);
+    void toggleOptions(const int boxIndex);
 
 private:
     void init();

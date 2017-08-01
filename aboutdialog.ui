@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>402</width>
+    <width>421</width>
     <height>199</height>
    </rect>
   </property>
@@ -15,9 +15,23 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
+    <widget class="QLabel" name="appNameLabel">
+     <property name="font">
+      <font>
+       <pointsize>24</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="label">
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:xx-large; font-weight:600;&quot;&gt;waifu2x-converter-qt&lt;/span&gt;&lt;/p&gt;&lt;p&gt;waifu2x-converter-qt is a Qt front-end to waifu2x-converter-cpp.&lt;/p&gt;&lt;p&gt;Copyright (c) 2015 khws4v1&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;A Qt front-end to waifu2x-converter-cpp.&lt;/p&gt;&lt;p&gt;Copyright (c) 2015 khws4v1, (c) 2017 toyg, released under MIT License.&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Process Dialog icons by &lt;a href=&quot;http://www.danilodemarco.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Danilo DeMarco&lt;/span&gt;&lt;/a&gt;, &lt;a href=&quot;http://danielbruce.se/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;Daniel Bruce&lt;/span&gt;&lt;/a&gt;, &lt;a href=&quot;https://www.iconfinder.com/isaacnc&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;IsaacNC&lt;/span&gt;&lt;/a&gt;. &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
    </item>
