@@ -100,35 +100,63 @@ void ProcessDialog::sendResultNotification(bool isSuccessed)
 
 void ProcessDialog::init()
 {
+    ui->iconLabel->setPixmap(style()->standardPixmap(QStyle::SP_FileIcon));
+
     QDir dir(m_settings->waifu2xConverterCppCommand());
     QStringList args;
 
     dir.cdUp();
 
-    if (!m_settings->isOptionIgnored(Jobs))
+    ui->outLabelThreads->hide();
+    ui->outLabelScale->hide();
+    ui->outLabelNoise->hide();
+    ui->outValueLabelThreads->hide();
+    ui->outValueLabelScale->hide();
+    ui->outValueLabelNoise->hide();
+    // this will look better when we get a proper model
+    ui->outLabelMode->setText("noise_scale");
+
+
+    if (!m_settings->isOptionIgnored(Jobs)){
+        QString numThreads = (m_settings->optionArgument(Jobs).isEmpty()
+                          ? QString::number(m_threads)
+                          : m_settings->optionArgument(Jobs));
         args << m_settings->optionString(Jobs)
-             << (m_settings->optionArgument(Jobs).isEmpty()
-                 ? QString::number(m_threads)
-                 : m_settings->optionArgument(Jobs));
+             << numThreads;
+        ui->outValueLabelThreads->setText(numThreads);
+        ui->outLabelThreads->show();
+        ui->outValueLabelThreads->show();
+    }
 
-    if (!m_settings->isOptionIgnored(ScaleRatio))
+    if (!m_settings->isOptionIgnored(ScaleRatio)){
+        QString numScale = (m_settings->optionArgument(ScaleRatio).isEmpty()
+                            ? QString::number(m_scaleRatio)
+                            : m_settings->optionArgument(ScaleRatio));
         args << m_settings->optionString(ScaleRatio)
-             << (m_settings->optionArgument(ScaleRatio).isEmpty()
-                 ? QString::number(m_scaleRatio)
-                 : m_settings->optionArgument(ScaleRatio));
+             << numScale;
+        ui->outValueLabelScale->setText(numScale);
+        ui->outLabelScale->show();
+        ui->outValueLabelScale->show();
+    }
 
-    if (!m_settings->isOptionIgnored(NoiseLevel))
+    if (!m_settings->isOptionIgnored(NoiseLevel)) {
+        QString numNoise = (m_settings->optionArgument(NoiseLevel).isEmpty()
+                            ? QString::number(m_noiseReductionLevel)
+                            : m_settings->optionArgument(NoiseLevel));
         args << m_settings->optionString(NoiseLevel)
-             << (m_settings->optionArgument(NoiseLevel).isEmpty()
-                 ? QString::number(m_noiseReductionLevel)
-                 : m_settings->optionArgument(NoiseLevel));
-
-    if (!m_settings->isOptionIgnored(Mode))
+             << numNoise;
+        ui->outValueLabelNoise->setText(numNoise);
+        ui->outLabelNoise->show();
+        ui->outValueLabelNoise->show();
+    }
+    if (!m_settings->isOptionIgnored(Mode)){
+        QString modeValue = (m_settings->optionArgument(Mode).isEmpty()
+                             ? m_imageProcessingMode
+                             : m_settings->optionArgument(Mode));
         args << m_settings->optionString(Mode)
-             << (m_settings->optionArgument(Mode).isEmpty()
-                 ? m_imageProcessingMode
-                 : m_settings->optionArgument(Mode));
-
+             << modeValue;
+        ui->outLabelMode->setText(modeValue);
+    }
     if (!m_settings->isOptionIgnored(InputFile))
         args << m_settings->optionString(InputFile)
              << (m_settings->optionArgument(InputFile).isEmpty()
@@ -160,7 +188,6 @@ void ProcessDialog::init()
 
     m_process->start(m_settings->waifu2xConverterCppCommand(), args);
 
-    ui->iconLabel->setPixmap(style()->standardPixmap(QStyle::SP_FileIcon));
 
     connect(m_process, &QProcess::readyReadStandardError, [&]() {
         QMetaObject::invokeMethod(this,

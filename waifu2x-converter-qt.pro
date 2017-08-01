@@ -40,3 +40,6 @@ FORMS    += mainwindow.ui \
     preferencesdialog.ui \
     aboutdialog.ui \
     optionpreferencesform.ui
+
+RESOURCES += \
+    icons.qrc
