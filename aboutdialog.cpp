@@ -6,6 +6,7 @@ AboutDialog::AboutDialog(QWidget *parent) :
     ui(new Ui::AboutDialog)
 {
     ui->setupUi(this);
+    ui->appNameLabel->setText(qApp->applicationDisplayName());
 }
 
 AboutDialog::~AboutDialog()
