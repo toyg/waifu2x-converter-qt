@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QCloseEvent>
 #include "waifu2xconverterqtsettings.h"
+#include "processmodemodel.h"
 
 namespace Ui {
 class MainWindow;
@@ -16,6 +17,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    ProcessModeModel *processModeModel();
 
 private slots:
     void browseImage();
@@ -30,6 +32,7 @@ private:
 
     Ui::MainWindow *ui;
     Waifu2xConverterQtSettings* m_settings;
+    ProcessModeModel* m_procmode;
 };
 
 #endif // MAINWINDOW_H
