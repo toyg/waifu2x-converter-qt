@@ -4,13 +4,14 @@
 #include "processdialog.h"
 #include "preferencesdialog.h"
 #include "aboutdialog.h"
+#include "processmodemodel.h"
 #include <QFileDialog>
-#include <QStandardPaths>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow),
-    m_settings(new Waifu2xConverterQtSettings)
+    m_settings(new Waifu2xConverterQtSettings),
+    m_procmode(new ProcessModeModel)
 {
     ui->setupUi(this);
     init();
@@ -21,17 +22,24 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+ProcessModeModel* MainWindow::processModeModel(){
+    return m_procmode;
+}
+
 void MainWindow::browseImage()
 {
     QFileDialog dialog(this,
                        tr("Select image"),
-                       QStandardPaths::writableLocation(QStandardPaths::PicturesLocation));
+                       m_settings->lastUsedDir());
     dialog.setAcceptMode(QFileDialog::AcceptOpen);
     dialog.setMimeTypeFilters({"image/jpeg",
                                "image/png",
                                "application/octet-stream"});
-    if (dialog.exec() == QFileDialog::Accepted)
-        processImage(dialog.selectedFiles().first());
+    if (dialog.exec() == QFileDialog::Accepted){
+        QString filePath = dialog.selectedFiles().first();
+        m_settings->setLastUsedDir(QDir(filePath).absolutePath());
+        processImage(filePath);
+    }
 }
 
 void MainWindow::processImage(const QString &imageFileName)
@@ -49,7 +57,8 @@ void MainWindow::processImage(const QString &imageFileName)
                          ui->noiseReductionLevel->value(),
                          ui->imageProcessingModeBox->currentData().toString(),
                          outputFileName,
-                         m_settings->modelDirectory());
+                         m_settings->modelDirectory(),
+                         this);
     dialog.exec();
 }
 
@@ -99,10 +108,7 @@ void MainWindow::init()
 
     auto* dropLabel = new DropLabel(this);
 
-    // at some point this should probably be a proper model
-    ui->imageProcessingModeBox->insertItem(0, tr("Noise Reduction"), "noise");
-    ui->imageProcessingModeBox->insertItem(1, tr("Upscale"),"scale");
-    ui->imageProcessingModeBox->insertItem(2, tr("Noise Reduction & Upscale"), "noise_scale");
+    ui->imageProcessingModeBox->setModel(m_procmode);
 
     connect(ui->action_Preferences, &QAction::triggered, [&]() {
         PreferencesDialog dialog;

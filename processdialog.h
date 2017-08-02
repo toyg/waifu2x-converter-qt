@@ -31,6 +31,7 @@ private slots:
 private:
     void sendResultNotification(bool isSuccessed);
     void init();
+    QString getProcModeLabel(QString procMode);
 
     Ui::ProcessDialog* ui;
     Waifu2xConverterQtSettings* m_settings;

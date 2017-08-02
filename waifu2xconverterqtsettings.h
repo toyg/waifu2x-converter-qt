@@ -4,6 +4,7 @@
 #include "waifu2xconvertercppoptions.h"
 #include <QSettings>
 #include <QApplication>
+#include <QStandardPaths>
 #include <QDir>
 
 class Waifu2xConverterQtSettings : public QSettings
@@ -14,6 +15,17 @@ public:
     inline void restoreDefaults()
     {
         for (const QString& key : allKeys()) remove(key);
+    }
+
+    inline void setLastUsedDir(QString path)
+    {
+        setValue("LastUsedDir", path);
+    }
+    inline QString lastUsedDir() const
+    {
+        return value("LastUsedDir",
+                     QStandardPaths::writableLocation(QStandardPaths::PicturesLocation)
+               ).toString();
     }
 
     inline void setWaifu2xConverterCppCommand(const QString& command)

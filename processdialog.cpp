@@ -1,4 +1,5 @@
 #include "processdialog.h"
+#include "mainwindow.h"
 #include "ui_processdialog.h"
 #include "waifu2xconvertercppoptions.h"
 #include <QDir>
@@ -98,6 +99,13 @@ void ProcessDialog::sendResultNotification(bool isSuccessed)
     }
 }
 
+QString ProcessDialog::getProcModeLabel(QString procMode){
+    ProcessModeModel* model = ((MainWindow*)parent())->processModeModel();
+    QModelIndexList indexes = model->match(model->index(0,0, QModelIndex()), Qt::UserRole, procMode, -1, Qt::MatchExactly);
+    QStandardItem* item = model->itemFromIndex(indexes.first());
+    return item->data(Qt::DisplayRole).toString();
+}
+
 void ProcessDialog::init()
 {
     ui->iconLabel->setPixmap(style()->standardPixmap(QStyle::SP_FileIcon));
@@ -113,9 +121,8 @@ void ProcessDialog::init()
     ui->outValueLabelThreads->hide();
     ui->outValueLabelScale->hide();
     ui->outValueLabelNoise->hide();
-    // this will look better when we get a proper model
-    ui->outLabelMode->setText("noise_scale");
 
+    ui->outLabelMode->setText(this->getProcModeLabel(m_imageProcessingMode));
 
     if (!m_settings->isOptionIgnored(Jobs)){
         QString numThreads = (m_settings->optionArgument(Jobs).isEmpty()
@@ -155,7 +162,7 @@ void ProcessDialog::init()
                              : m_settings->optionArgument(Mode));
         args << m_settings->optionString(Mode)
              << modeValue;
-        ui->outLabelMode->setText(modeValue);
+        ui->outLabelMode->setText(this->getProcModeLabel(modeValue));
     }
     if (!m_settings->isOptionIgnored(InputFile))
         args << m_settings->optionString(InputFile)

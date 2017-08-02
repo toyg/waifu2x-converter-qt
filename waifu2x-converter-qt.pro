@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     preferencesdialog.cpp \
     aboutdialog.cpp \
     optionpreferencesform.cpp \
-    waifu2xconvertercppoptions.cpp
+    waifu2xconvertercppoptions.cpp \
+    processmodemodel.cpp
 
 HEADERS  += mainwindow.h \
     waifu2xconverterqtsettings.h \
@@ -33,7 +34,8 @@ HEADERS  += mainwindow.h \
     preferencesdialog.h \
     aboutdialog.h \
     optionpreferencesform.h \
-    waifu2xconvertercppoptions.h
+    waifu2xconvertercppoptions.h \
+    processmodemodel.h
 
 FORMS    += mainwindow.ui \
     processdialog.ui \
