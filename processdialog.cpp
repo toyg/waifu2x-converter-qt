@@ -3,6 +3,7 @@
 #include "ui_processdialog.h"
 #include "waifu2xconvertercppoptions.h"
 #include <QDir>
+#include <QStyle>
 #include <QtDebug>
 
 #ifdef Q_OS_LINUX
